@@ -1,31 +1,30 @@
 const accordeon = () => {
+  const accordeonElements = document.querySelectorAll('.accordeon .element');
+  const contentElements = document.querySelectorAll('.accordeon .element-content');
 
-  // Получаем все элементы аккордеона
-const accordeonElements = document.querySelectorAll('.accordeon .element');
+  accordeonElements.forEach((element, index) => {
+    const title = element.querySelector('.title');
+    const content = contentElements[index];
 
-// Добавляем обработчик события для каждого элемента
-accordeonElements.forEach(element => {
-  const title = element.querySelector('.title');
-  const content = element.querySelector('.element-content');
+    title.addEventListener('click', () => {
+      const isActive = element.classList.contains('active');
 
-  // При клике на заголовок элемента
-  title.addEventListener('click', () => {
-    // Проверяем, содержит ли элемент класс "active"
-    const isActive = element.classList.contains('active');
+      if (!isActive) {
+        accordeonElements.forEach(el => {
+          el.classList.remove('active');
+        });
+        contentElements.forEach(content => {
+          content.style.display = 'none';
+        });
 
-    // Закрываем все элементы аккордеона
-    accordeonElements.forEach(el => {
-      el.classList.remove('active');
+        element.classList.add('active');
+        content.style.display = 'block';
+      } else {
+        element.classList.remove('active');
+        content.style.display = 'none';
+      }
     });
-
-    // Если элемент не был активным, открываем его
-    if (!isActive) {
-      element.classList.add('active');
-    }
   });
-});
+};
 
-
-}
-
-export default accordeon  
+export default accordeon;

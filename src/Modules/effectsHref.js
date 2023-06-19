@@ -27,9 +27,9 @@ function smoothScroll(targetElement) {
   const targetPosition = targetElement.offsetTop;
   const startPosition = window.pageYOffset;
   const distance = targetPosition - startPosition;
-  const duration = 1000; // Продолжительность анимации в миллисекундах
+  const duration = 1000; 
   const easing = function(t) {
-    return t * t * t; // Измените эту функцию, чтобы настроить эффект плавности
+    return t * t * t; 
   };
   let startTime = null;
 

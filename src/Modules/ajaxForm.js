@@ -8,33 +8,27 @@ const ajaxForm = () => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Получаем значения полей формы
     const fioValue = fioInput.value;
     const telValue = telInput.value;
 
-    // Проверяем, что оба поля заполнены
     if (fioValue.trim() === '' || telValue.trim() === '') {
       showMessage('Пожалуйста, заполните все обязательные поля');
       return;
     }
 
-    // Проверяем количество цифр в номере телефона
     const phoneNumber = telValue.replace(/\D+/g, '');
     if (phoneNumber.length < 11) {
       showMessage('Номер должен содержать не менее 11 цифр');
       return;
     }
 
-    // Создаем объект с данными для отправки
     const data = {
       fio: fioValue,
       tel: telValue
     };
 
-    // Оповещение пользователя о состоянии отправки
     showMessage('Отправка данных...');
 
-    // Отправляем данные с использованием AJAX
     sendData('https://jsonplaceholder.typicode.com/posts', data)
       .then(() => {
         showMessage('Данные успешно отправлены');

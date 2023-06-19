@@ -5,7 +5,6 @@ const sliderTop = () => {
   dotsContainer.classList.add('slick-dots');
   slider.appendChild(dotsContainer);
 
-  // Создаем точки переключения для каждого слайда
   items.forEach((item, index) => {
     const dot = document.createElement('li');
     dot.addEventListener('click', () => {
