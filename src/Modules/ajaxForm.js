@@ -5,7 +5,7 @@ const ajaxForm = () => {
   const submitButton = document.querySelector('.modal-callback input[type="submit"]');
   const messageElement = document.createElement('span');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const fioValue = fioInput.value;
@@ -29,13 +29,16 @@ const ajaxForm = () => {
 
     showMessage('Отправка данных...');
 
-    sendData('https://jsonplaceholder.typicode.com/posts', data)
-      .then(() => {
-        showMessage('Данные успешно отправлены');
-      })
-      .catch((error) => {
-        showMessage('Ошибка отправки данных: ' + error.message);
-      });
+    try {
+      await sendData('https://jsonplaceholder.typicode.com/posts', data);
+      showMessage('Данные успешно отправлены');
+      setTimeout(() => {
+        form.reset();
+        messageElement.remove();
+      }, 5000);
+    } catch (error) {
+      showMessage('Ошибка отправки данных: ' + error.message);
+    }
   });
 
   const sendData = async (url, data) => {

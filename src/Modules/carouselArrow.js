@@ -1,43 +1,47 @@
 const carouselArrow = () => {
+  const arrowLeft = document.querySelector('.arrow-left');
+  const arrowRight = document.querySelector('.arrow-right');
+  const carousel = document.querySelector('.services-carousel');
+  const slides = carousel.querySelectorAll('.col-sm-6');
+  const visibleSlides = {
+    desktop: 3,
+    tablet: 2,
+    mobile: 1
+  };
+  let currentIndex = 0;
 
-const arrowLeft = document.querySelector('.arrow-left');
-const arrowRight = document.querySelector('.arrow-right');
-const carousel = document.querySelector('.services-carousel');
-const slides = carousel.querySelectorAll('.col-sm-6');
+  arrowLeft.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlidesVisibility();
+  });
 
-const visibleSlides = 3;
-let currentIndex = 0;
+  arrowRight.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateSlidesVisibility();
+  });
 
-arrowLeft.addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+  window.addEventListener('resize', updateSlidesVisibility);
+
   updateSlidesVisibility();
-});
 
-arrowRight.addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % slides.length;
-  updateSlidesVisibility();
-});
+  function updateSlidesVisibility() {
+    const viewportWidth = window.innerWidth;
+    let currentVisibleSlides = visibleSlides.desktop;
 
-updateSlidesVisibility();
+    if (viewportWidth < 992 && viewportWidth >= 768) {
+      currentVisibleSlides = visibleSlides.tablet;
+    } else if (viewportWidth < 768) {
+      currentVisibleSlides = visibleSlides.mobile;
+    }
 
-function updateSlidesVisibility() {
-  for (let i = 0; i < slides.length; i++) {
-    if (isSlideVisible(i)) {
-      slides[i].style.display = 'block';
-    } else {
-      slides[i].style.display = 'none';
+    for (let i = 0; i < slides.length; i++) {
+      if (i >= currentIndex && i < currentIndex + currentVisibleSlides) {
+        slides[i].style.display = 'block';
+      } else {
+        slides[i].style.display = 'none';
+      }
     }
   }
-}
+};
 
-function isSlideVisible(slideIndex) {
-  const endVisibleIndex = (currentIndex + visibleSlides - 1) % slides.length;
-  if (currentIndex <= endVisibleIndex) {
-    return slideIndex >= currentIndex && slideIndex <= endVisibleIndex;
-  } else {
-    return slideIndex >= currentIndex || slideIndex <= endVisibleIndex;
-  }
-}
-
-}
-export default carouselArrow 
+export default carouselArrow;
