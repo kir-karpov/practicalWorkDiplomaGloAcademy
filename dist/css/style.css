@@ -831,7 +831,14 @@ hr.white {
 	.top-slider .text {
 		font-size: 18px;
 		line-height: 1.6;
-	}
+    display: none;
+  }
+.top-slider .item {
+  display: none;
+}
+.top-slider .active {
+  display: block; 
+}
 	.top-menu > ul > li > a {
 		font-size: 16px;
 	}
